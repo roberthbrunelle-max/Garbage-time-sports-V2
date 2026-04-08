@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Articles — Garbage Time Sports</title>
+  <meta name="description" content="All articles, analysis, and opinions from Garbage Time Sports." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Search box */
+    .search-container {
+      margin-bottom: 32px;
+    }
+    .search-container input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-family: var(--font-condensed);
+      font-size: 15px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .search-container input::placeholder { color: var(--text-muted); }
+    .search-container input:focus { border-color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar" role="navigation">
+    <div class="container nav-inner">
+      <div class="nav-logo"><a href="index.html">Garbage Time <span>Sports</span></a></div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <div class="nav-dropdown">
+            <button>Content</button>
+            <div class="dropdown-menu">
+              <a href="articles.html">📰 Articles</a>
+              <a href="infographics.html">📊 Infographics</a>
+              <a href="about.html">ℹ️ About</a>
+            </div>
+          </div>
+        </li>
+        <li><a href="articles.html" class="active">Articles</a></li>
+        <li><a href="infographics.html">Infographics</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="nav-search-btn" aria-label="Search">🔍</button>
+        <button class="nav-hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="articles.html">Articles</a>
+      <a href="infographics.html">Infographics</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <h1>The <span>Archive</span></h1>
+      <p>Every article we've published. Filter by league, search by keyword.</p>
+    </div>
+  </header>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="container filter-inner">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="nba">🏀 NBA</button>
+      <button class="filter-btn" data-filter="cfb">🎓 College</button>
+      <button class="filter-btn" data-filter="analytics">📊 Analytics</button>
+      <button class="filter-btn" data-filter="opinion">🔥 Opinion</button>
+    </div>
+  </div>
+
+  <!-- ARTICLES GRID -->
+  <main class="articles-grid-section">
+    <div class="container">
+
+      <!-- Live Search Box -->
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍  Search articles by title or keyword..." aria-label="Search articles" />
+      </div>
+
+      <div class="articles-grid" id="articleGrid">
+
+        <!-- Colorado Football -->
+        <article class="article-card fade-in" data-category="cfb" data-title="the rise and fall of colorado football cautionary tale nil transfer portal">
+          <a href="articles/colorado-football.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a0d00,#3d2400);">🏈</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag cfb">CFB</span></div>
+            <a href="articles/colorado-football.html"><h3 class="card-title">The Rise and "Fall" of Colorado Football, a Cautionary Tale?</h3></a>
+            <p class="card-preview">NIL, transfer portal reshape college football as Colorado serves as early test case. Ryan Staub talks roster turnover, one-year leases, and what fans don't see.</p>
+            <div class="card-footer">
+              <span class="card-author">Henry Brunelle</span>
+              <span class="card-date">Mar 24, 2026</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- March Madness -->
+        <article class="article-card fade-in" data-category="cfb" data-title="march madness losing magic ncaa tournament underdogs transfer portal nil">
+          <a href="articles/march-madness.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a0a0a,#3c0a0a);">🏀</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag cfb">CFB</span></div>
+            <a href="articles/march-madness.html"><h3 class="card-title">March Madness Is Losing Its Magic</h3></a>
+            <p class="card-preview">For decades, underdogs defined the tournament. Now, a new era of money and movement is rewriting the script — and the data backs it up.</p>
+            <div class="card-footer">
+              <span class="card-author">Henry Brunelle</span>
+              <span class="card-date">Mar 20, 2026</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Jai Alai Fix -->
+        <article class="article-card fade-in" data-category="opinion" data-title="jai alai whitey bulger mob murder tulsa ceo roger wheeler sports history fix">
+          <a href="articles/jai-alai-fix.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a0a0a,#3c0a0a);">🎭</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag opinion">Opinion</span></div>
+            <a href="articles/jai-alai-fix.html"><h3 class="card-title">The Unbelievable Fix: How Whitey Bulger's Mob Ran Jai Alai</h3></a>
+            <p class="card-preview">A straight-laced CEO, a niche sport nobody watched, and one of America's most dangerous crime syndicates. One of the craziest stories in sports history.</p>
+            <div class="card-footer">
+              <span class="card-author">Henry Brunelle</span>
+              <span class="card-date">Mar 5, 2026</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lance Armstrong -->
+        <article class="article-card fade-in" data-category="opinion" data-title="lance armstrong doping cycling tour de france livestrong hero america">
+          <a href="articles/lance-armstrong.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a1a00,#2e2e00);">🚴</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag opinion">Opinion</span></div>
+            <a href="articles/lance-armstrong.html"><h3 class="card-title">Do We Need a Modern-Era Armstrong to Save Us?</h3></a>
+            <p class="card-preview">America is fractured and desperate for someone to believe in. Lance Armstrong — flaws, doping, and all — might be the template we're actually looking for.</p>
+            <div class="card-footer">
+              <span class="card-author">Jasper Rich</span>
+              <span class="card-date">Jun 12, 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- NBA Finals Game 3 Recap -->
+        <article class="article-card fade-in" data-category="nba" data-title="nba finals game 3 recap indiana pacers okc thunder haliburton">
+          <a href="articles/nba-finals-game3-recap.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#1a1a2e,#0f3460);">🏆</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag nba">NBA</span></div>
+            <a href="articles/nba-finals-game3-recap.html"><h3 class="card-title">Indy's Haymaker: NBA Finals Game Three Recap</h3></a>
+            <p class="card-preview">Indiana's game three victory felt less like basketball and more like the final battle of Super Mario Bros. Haliburton: 22 pts, 9 reb, 11 ast.</p>
+            <div class="card-footer">
+              <span class="card-author">Flynn Nulty</span>
+              <span class="card-date">Jun 12, 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- NBA Finals Game 3 Preview -->
+        <article class="article-card fade-in" data-category="nba" data-title="nba finals game 3 preview oklahoma city thunder indiana pacers sga haliburton">
+          <a href="articles/nba-finals-game3-preview.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#00101a,#001a30);">🏀</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag nba">NBA</span></div>
+            <a href="articles/nba-finals-game3-preview.html"><h3 class="card-title">NBA Finals Game Three: A Must-Win</h3></a>
+            <p class="card-preview">The Thunder are the best team on Earth. The Pacers have something more dangerous: experience. The series shifts in Indianapolis tonight.</p>
+            <div class="card-footer">
+              <span class="card-author">Henry Brunelle</span>
+              <span class="card-date">Jun 11, 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Wilt Chamberlain -->
+        <article class="article-card fade-in" data-category="analytics" data-title="wilt chamberlain stats analytics history unbelievable effect nba basketball">
+          <a href="articles/wilt-chamberlain.html">
+            <div class="card-img">
+              <div class="card-img-placeholder" style="background:linear-gradient(135deg,#0a1a0a,#0a2e0a);">📊</div>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-tag-row"><span class="tag analytics">Analytics</span></div>
+            <a href="articles/wilt-chamberlain.html"><h3 class="card-title">How Stats Can Be Too Good: Wilt Chamberlain</h3></a>
+            <p class="card-preview">Can a stat line be so impossible it becomes unbelievable? When Wilt averaged 50.4 points per game, we stopped trusting the numbers entirely.</p>
+            <div class="card-footer">
+              <span class="card-author">Juice Hamilton</span>
+              <span class="card-date">Jun 11, 2025</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /articles-grid -->
+
+      <!-- No results message -->
+      <div id="no-results" style="display:none; text-align:center; padding: 48px 0;">
+        <p style="font-family:var(--font-condensed); font-size:18px; color:var(--text-muted);">No articles match that search. Try a different keyword.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">Garbage Time <span>Sports</span></div>
+          <p class="footer-tagline">Smart analysis, strong opinions, zero hot-take filler.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn">𝕏</a><a href="#" class="social-btn">📷</a><a href="#" class="social-btn">▶</a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Coverage</h4><ul><li><a href="articles.html">NBA</a></li><li><a href="articles.html">College Football</a></li><li><a href="articles.html">Opinion</a></li></ul></div>
+        <div class="footer-col"><h4>Content</h4><ul><li><a href="articles.html">Articles</a></li><li><a href="infographics.html">Infographics</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="#">Contact</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 <span>Garbage Time Sports</span>. All rights reserved.</p>
+        <p>Built for fans who actually read past the headline.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Live search — searches against data-title attribute
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('#articleGrid .article-card');
+    const noResults = document.getElementById('no-results');
+
+    searchInput.addEventListener('input', function() {
+      const term = this.value.toLowerCase().trim();
+      let visible = 0;
+      cards.forEach(card => {
+        const text = (card.dataset.title || '') + ' ' + card.innerText.toLowerCase();
+        const show = !term || text.includes(term);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>

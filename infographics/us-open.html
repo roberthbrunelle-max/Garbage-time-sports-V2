@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oakmont Contenders - A Data-Driven Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white antialiased">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12 md:mb-16">
+            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-wide text-green-400">Oakmont Contenders</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">A data-driven look at the players best equipped to conquer the U.S. Open at Oakmont, based on key performance statistics and major championship history.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="top-contender" class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 border border-green-500/30">
+                <div class="text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold text-green-400">The Composite King</h2>
+                    <p class="text-5xl md:text-7xl font-black my-4">Scottie Scheffler</p>
+                    <div class="flex justify-center items-center gap-4">
+                        <p class="text-gray-400 text-lg">Composite Score:</p>
+                        <p class="text-6xl md:text-8xl font-black text-white">83</p>
+                    </div>
+                    <p class="mt-4 text-gray-300 max-w-2xl mx-auto">
+                        Combining elite major championship performance with top-tier rankings in SG: Approach (#1) and SG: Around the Green (#3), Scheffler stands in a class of his own as the data-defined favorite.
+                    </p>
+                </div>
+            </section>
+
+            <section id="composite-ranking">
+                <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">Overall Player Readiness</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">The Oakmont Composite Score identifies the most well-rounded players for this specific challenge. It combines ranks in Driving Accuracy, SG: Approach, and SG: Around the Green, plus a bonus for strong major championship performance.</p>
+                    <div class="chart-container" style="height: 500px; max-height: 70vh;">
+                        <canvas id="compositeScoreChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="key-stats">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-10">Masters of the Craft: Key Skill Leaders</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8">
+                        <h3 class="text-xl font-bold text-center text-green-400">Driving Accuracy</h3>
+                        <p class="text-center text-gray-400 mt-2 mb-6 text-sm">Finding the fairway is paramount to avoid Oakmont's penal rough. These players are the best on Tour at keeping it in the short grass.</p>
+                        <div class="chart-container">
+                            <canvas id="drivingAccuracyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8">
+                        <h3 class="text-xl font-bold text-center text-green-400">Strokes Gained: Approach</h3>
+                         <p class="text-center text-gray-400 mt-2 mb-6 text-sm">Oakmont's slick, undulating greens demand elite iron play. These players gain the most strokes on the field with their approach shots.</p>
+                        <div class="chart-container">
+                            <canvas id="sgApproachChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8">
+                        <h3 class="text-xl font-bold text-center text-green-400">Strokes Gained: Around the Green</h3>
+                        <p class="text-center text-gray-400 mt-2 mb-6 text-sm">No one hits every green here. A world-class short game is crucial for scrambling and bogey avoidance. These are the top magicians.</p>
+                        <div class="chart-container">
+                            <canvas id="sgAroundGreenChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="major-performance">
+                <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">Proven Major Performers</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">This chart shows the average finish for players with an elite major championship record over the last five seasons. A lower bar indicates better, more consistent performance on the biggest stages.</p>
+                    <div class="chart-container">
+                        <canvas id="majorPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="full-data">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-8">Full Composite Data Table</h2>
+                <div class="overflow-x-auto bg-gray-800 rounded-2xl p-4">
+                    <table class="min-w-full text-sm text-left">
+                        <thead class="bg-gray-700 text-gray-300 uppercase">
+                            <tr>
+                                <th class="p-3">Rank</th>
+                                <th class="p-3">Player</th>
+                                <th class="p-3">Composite Score</th>
+                                <th class="p-3">Driving Acc. (Pts)</th>
+                                <th class="p-3">SG: App. (Pts)</th>
+                                <th class="p-3">SG: Arg. (Pts)</th>
+                                <th class="p-3">Major Bonus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody" class="divide-y divide-gray-700">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const playerData = [
+            { rank: 1, player: "Scottie Scheffler", score: 83, driving: 0, approach: 20, around: 18, major: 30 },
+            { rank: 2, player: "Collin Morikawa", score: 64, driving: 19, approach: 15, around: 0, major: 15 },
+            { rank: 3, player: "Justin Thomas", score: 59, driving: 0, approach: 13, around: 14, major: 15 },
+            { rank: 4, player: "Tommy Fleetwood", score: 58, driving: 0, approach: 9, around: 17, major: 30 },
+            { rank: 5, player: "Xander Schauffele", score: 54, driving: 0, approach: 14, around: 0, major: 30 },
+            { rank: 6, player: "Russell Henley", score: 53, driving: 7, approach: 5, around: 16, major: 15 },
+            { rank: 7, player: "Si Woo Kim", score: 45, driving: 2, around: 15, approach: 0, major: 15 },
+            { rank: 8, player: "Patrick Cantlay", score: 44, driving: 0, approach: 11, around: 0, major: 30 },
+            { rank: 9, player: "Shane Lowry", score: 43, driving: 0, approach: 19, around: 0, major: 15 },
+            { rank: 10, player: "Hideki Matsuyama", score: 41, driving: 0, around: 19, approach: 0, major: 15 },
+            { rank: 11, player: "Corey Conners", score: 38, driving: 13, approach: 0, around: 0, major: 15 },
+            { rank: 12, player: "Keegan Bradley", score: 37, driving: 0, approach: 7, around: 12, major: 0 },
+            { rank: 13, player: "Aaron Rai", score: 32, driving: 20, approach: 0, around: 0, major: 0 },
+            { rank: 14, player: "Viktor Hovland", score: 29, driving: 0, approach: 12, around: 0, major: 15 },
+            { rank: 15, player: "Sepp Straka", score: 18, driving: 10, approach: 18, around: 0, major: 0 },
+            { rank: 16, player: "Jason Day", score: 18, driving: 0, approach: 0, around: 13, major: 0 },
+        ];
+
+        const fullTableData = [
+            { rank: 1, player: "Scottie Scheffler", score: 83, driving: '---', approach: '1st / 20 pts', around: '3rd / 18 pts', major: 30 },
+            { rank: 2, player: "Collin Morikawa", score: 64, driving: '2nd / 19 pts', approach: '6th / 15 pts', around: '---', major: 15 },
+            { rank: 3, player: "Justin Thomas", score: 59, driving: '---', approach: '8th / 13 pts', around: '7th / 14 pts', major: 15 },
+            { rank: 4, player: "Tommy Fleetwood", score: 58, driving: '---', approach: '12th / 9 pts', around: '4th / 17 pts', major: 30 },
+            { rank: 5, player: "Xander Schauffele", score: 54, driving: '---', approach: '7th / 14 pts', around: '---', major: 30 },
+            { rank: 6, player: "Russell Henley", score: 53, driving: '14th / 7 pts', approach: '16th / 5 pts', around: '5th / 16 pts', major: 15 },
+            { rank: 7, player: "Si Woo Kim", score: 45, driving: '19th / 2 pts', approach: '---', around: '6th / 15 pts', major: 15 },
+            { rank: 8, player: "Patrick Cantlay", score: 44, driving: '---', approach: '10th / 11 pts', around: '---', major: 30 },
+            { rank: 9, player: "Shane Lowry", score: 43, driving: '---', approach: '2nd / 19 pts', around: '---', major: 15 },
+            { rank: 10, player: "Hideki Matsuyama", score: 41, driving: '---', approach: '---', around: '2nd / 19 pts', major: 15 },
+            { rank: 11, player: "Corey Conners", score: 38, driving: '8th / 13 pts', approach: '---', around: '---', major: 15 },
+            { rank: 12, player: "Keegan Bradley", score: 37, driving: '---', approach: '14th / 7 pts', around: '9th / 12 pts', major: 0 },
+            { rank: 13, player: "Aaron Rai", score: 32, driving: '1st / 20 pts', approach: '---', around: '---', major: 0 },
+            { rank: 14, player: "Viktor Hovland", score: 29, driving: '---', approach: '9th / 12 pts', around: '---', major: 15 },
+            { rank: 15, player: "Sepp Straka", score: 18, driving: '11th / 10 pts', approach: '3rd / 18 pts', around: '---', major: 0 },
+            { rank: 16, player: "Jason Day", score: 18, driving: '---', approach: '---', around: '8th / 13 pts', major: 0 },
+            { rank: 17, player: "Matt Wallace", score: 20, driving: '---', approach: '---', around: '1st / 20 pts', major: 0 },
+            { rank: 18, player: "Andrew Putnam", score: 20, driving: '6th / 15 pts', approach: '---', around: '---', major: 0 },
+            { rank: 19, player: "Sungjae Im", score: 19, driving: '9th / 12 pts', approach: '---', around: '---', major: 15 },
+            { rank: 20, player: "Lucas Glover", score: 17, driving: '7th / 14 pts', approach: '19th / 2 pts', around: '---', major: 0 },
+            { rank: 21, player: "J.J. Spaun", score: 16, driving: '---', approach: '5th / 16 pts', around: '---', major: 0 },
+            { rank: 22, player: "Ben Griffin", score: 16, driving: '---', approach: '17th / 4 pts', around: '10th / 11 pts', major: 0 },
+            { rank: 23, player: "Henrik Norlander", score: 16, driving: '---', approach: '4th / 17 pts', around: '---', major: 0 },
+            { rank: 24, player: "Paul Peterson", score: 16, driving: '3rd / 18 pts', approach: '---', around: '---', major: 0 },
+        ];
+        
+        const majorPerformanceData = [
+            { player: 'Scottie Scheffler', avgFinish: 11.8 },
+            { player: 'Xander Schauffele', avgFinish: 15.3 },
+            { player: 'Tommy Fleetwood', avgFinish: 21.6 },
+            { player: 'Patrick Cantlay', avgFinish: 23.3 },
+            { player: 'Viktor Hovland', avgFinish: 23.4 },
+            { player: 'Hideki Matsuyama', avgFinish: 25.1 },
+            { player: 'Collin Morikawa', avgFinish: 28.5 },
+            { player: 'Russell Henley', avgFinish: 29.2 },
+            { player: 'Shane Lowry', avgFinish: 30.1 },
+            { player: 'Corey Conners', avgFinish: 30.3 },
+            { player: 'Justin Thomas', avgFinish: 32.7 },
+            { player: 'Si Woo Kim', avgFinish: 37.1 },
+            { player: 'Sungjae Im', avgFinish: 35.5 },
+        ].sort((a,b) => a.avgFinish - b.avgFinish);
+
+        const drivingData = [
+            { player: 'Aaron Rai', rank: 1, points: 20 },
+            { player: 'Collin Morikawa', rank: 2, points: 19 },
+            { player: 'Paul Peterson', rank: 3, points: 18 },
+            { player: 'Andrew Putnam', rank: 6, points: 15 },
+            { player: 'Lucas Glover', rank: 7, points: 14 },
+            { player: 'Corey Conners', rank: 8, points: 13 },
+            { player: 'Sungjae Im', rank: 9, points: 12 },
+        ].sort((a,b) => b.points - a.points);
+        
+        const approachData = [
+            { player: 'Scottie Scheffler', rank: 1, points: 20 },
+            { player: 'Shane Lowry', rank: 2, points: 19 },
+            { player: 'Sepp Straka', rank: 3, points: 18 },
+            { player: 'Henrik Norlander', rank: 4, points: 17 },
+            { player: 'J.J. Spaun', rank: 5, points: 16 },
+            { player: 'Collin Morikawa', rank: 6, points: 15 },
+            { player: 'Xander Schauffele', rank: 7, points: 14 },
+        ].sort((a,b) => b.points - a.points);
+        
+        const aroundData = [
+            { player: 'Matt Wallace', rank: 1, points: 20 },
+            { player: 'Hideki Matsuyama', rank: 2, points: 19 },
+            { player: 'Scottie Scheffler', rank: 3, points: 18 },
+            { player: 'Tommy Fleetwood', rank: 4, points: 17 },
+            { player: 'Russell Henley', rank: 5, points: 16 },
+            { player: 'Si Woo Kim', rank: 6, points: 15 },
+            { player: 'Justin Thomas', rank: 7, points: 14 },
+        ].sort((a,b) => b.points - a.points);
+
+
+        const chartTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    },
+                    backgroundColor: '--primary-red',
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 10,
+                    cornerRadius: 6,
+                    displayColors: false,
+                },
+                legend: {
+                    display: false
+                }
+            }
+        };
+
+        const chartOptions = (isPercent = false) => ({
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                        borderColor: 'transparent',
+                    },
+                    ticks: {
+                        color: '#9CA3AF',
+                        font: {
+                            family: "'Inter', sans-serif"
+                        },
+                        callback: function(value) {
+                            return isPercent ? value + '%' : value;
+                        }
+                    }
+                },
+                y: {
+                    grid: {
+                        color: 'transparent',
+                        borderColor: 'transparent'
+                    },
+                    ticks: {
+                        color: '#D1D5DB',
+                        font: {
+                            family: "'Inter', sans-serif",
+                            size: 12
+                        }
+                    }
+                }
+            },
+            ...chartTooltipCallback
+        });
+        
+        const chartColors = {
+            primary: 'rgba(52, 211, 153, 0.8)',
+            primaryBorder: 'rgba(52, 211, 153, 1)',
+        }
+
+        new Chart(document.getElementById('compositeScoreChart'), {
+            type: 'bar',
+            data: {
+                labels: playerData.slice(0, 10).map(p => p.player),
+                datasets: [{
+                    label: 'Composite Score',
+                    data: playerData.slice(0, 10).map(p => p.score),
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.primaryBorder,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                }]
+            },
+            options: chartOptions()
+        });
+        
+        new Chart(document.getElementById('drivingAccuracyChart'), {
+            type: 'bar',
+            data: {
+                labels: drivingData.map(p => p.player),
+                datasets: [{
+                    label: 'Driving Accuracy Points',
+                    data: drivingData.map(p => p.points),
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.primaryBorder,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                }]
+            },
+            options: chartOptions()
+        });
+        
+        new Chart(document.getElementById('sgApproachChart'), {
+            type: 'bar',
+            data: {
+                labels: approachData.map(p => p.player),
+                datasets: [{
+                    label: 'SG: Approach Points',
+                    data: approachData.map(p => p.points),
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.primaryBorder,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                }]
+            },
+            options: chartOptions()
+        });
+
+        new Chart(document.getElementById('sgAroundGreenChart'), {
+            type: 'bar',
+            data: {
+                labels: aroundData.map(p => p.player),
+                datasets: [{
+                    label: 'SG: Around Green Points',
+                    data: aroundData.map(p => p.points),
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.primaryBorder,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                }]
+            },
+            options: chartOptions()
+        });
+
+        new Chart(document.getElementById('majorPerformanceChart'), {
+            type: 'bar',
+            data: {
+                labels: majorPerformanceData.map(p => p.player),
+                datasets: [{
+                    label: 'Average Major Finish',
+                    data: majorPerformanceData.map(p => p.avgFinish),
+                    backgroundColor: chartColors.primary,
+                    borderColor: chartColors.primaryBorder,
+                    borderWidth: 2,
+                    borderRadius: 4,
+                }]
+            },
+            options: chartOptions()
+        });
+        
+        const tableBody = document.getElementById('dataTableBody');
+        fullTableData.forEach(player => {
+            const row = document.createElement('tr');
+            row.className = 'bg-gray-800 hover:bg-gray-700/50 transition-colors duration-200';
+            row.innerHTML = `
+                <td class="p-3 font-bold text-white">${player.rank}</td>
+                <td class="p-3 font-semibold text-green-400">${player.player}</td>
+                <td class="p-3 font-bold text-lg text-white">${player.score}</td>
+                <td class="p-3 text-gray-300">${player.driving.replace(/ \/ \d+ pts/, '')}</td>
+                <td class="p-3 text-gray-300">${player.approach.replace(/ \/ \d+ pts/, '')}</td>
+                <td class="p-3 text-gray-300">${player.around.replace(/ \/ \d+ pts/, '')}</td>
+                <td class="p-3 text-gray-300">${player.major}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. Open Preview: The Oakmont Test - Garbage Time Sports</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    
+
+</body>
+</html>
+

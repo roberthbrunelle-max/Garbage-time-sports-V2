@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Finals Game 3 Recap: Indy's Haymaker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background-color: #111827; /* Gray 900 */
+        }
+        h1, h2, h3, .stat-value {
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 antialiased">
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-bold uppercase text-amber-400">INDY'S HAYMAKER</h1>
+            <p class="mt-2 text-2xl md:text-3xl text-gray-300">Pacers Take 2-1 Series Lead in Finals Thriller</p>
+            <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Indiana’s game three victory felt less like a basketball game and more like the final battle of Super Mario Bros. A look at the stats and stories behind the pivotal home win.</p>
+        </header>
+
+        <main class="space-y-20">
+
+            <section id="game-flow">
+                <div class="bg-gray-800/50 rounded-2xl shadow-2xl p-6 md:p-8 border border-amber-500/20">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-amber-400">Game Flow</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">After a tight first quarter, the Pacers surged ahead before halftime, fueled by a pivotal run from their bench. They never relinquished the lead, holding off the Thunder in a high-scoring affair.</p>
+                    <div class="chart-container">
+                        <canvas id="gameFlowChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="stat-leaders">
+                <div class="bg-gray-800/50 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-amber-400">The Big Guns: Stat Leaders</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">Both teams saw balanced attacks from their stars, but Tyrese Haliburton's near triple-double orchestrated the Pacers' offense and proved to be the difference-maker.</p>
+                    <div class="chart-container">
+                        <canvas id="statLeadersChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="unsung-heroes">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-10 text-amber-400">Unsung Heroes: The Difference Makers</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-gray-800/50 rounded-2xl p-6">
+                        <h3 class="text-3xl font-bold text-white">Bennedict Mathurin</h3>
+                        <p class="text-lg text-amber-500">Instant Offense</p>
+                        <p class="stat-value text-8xl text-white mt-4">27</p>
+                        <p class="text-gray-400 text-xl uppercase">Points in 22 Minutes</p>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-2xl p-6">
+                        <h3 class="text-3xl font-bold text-white">T.J. McConnell</h3>
+                        <p class="text-lg text-amber-500">The Catalyst</p>
+                        <p class="stat-value text-8xl text-white mt-4">4</p>
+                        <p class="text-gray-400 text-xl uppercase">Assists in 2nd QTR Surge</p>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-2xl p-6">
+                        <h3 class="text-3xl font-bold text-white">Luguentz Dort</h3>
+                        <p class="text-lg text-amber-500">First Quarter Fire</p>
+                        <p class="stat-value text-8xl text-white mt-4">3</p>
+                        <p class="text-gray-400 text-xl uppercase">Threes in the 1st QTR</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="team-comparison">
+                 <div class="bg-gray-800/50 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-amber-400">Team Comparison</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">A look at the key team statistics. While shooting percentages were nearly identical, the Pacers' slight edge in rebounding and assists, combined with fewer turnovers, highlighted a more controlled performance.</p>
+                    <div class="chart-container" style="height: 400px; max-height: 60vh;">
+                        <canvas id="teamComparisonChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-20 pt-8 border-t border-amber-500/20">
+            <p class="text-2xl font-bold text-amber-400 uppercase tracking-wider">Garbage Time Sports</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const pacersData = {
+            q1: 30, q2: 64, q3: 95, q4: 125,
+            fg_pct: 49.5, tp_pct: 38.1, ft_pct: 85.0, reb: 44, ast: 31, tov: 12
+        };
+
+        const thunderData = {
+            q1: 32, q2: 60, q3: 89, q4: 117,
+            fg_pct: 49.8, tp_pct: 37.5, ft_pct: 82.1, reb: 41, ast: 28, tov: 15
+        };
+        
+        const playerStats = {
+            haliburton: { pts: 22, reb: 9, ast: 11 },
+            siakam: { pts: 21, reb: 6, ast: 4 },
+            sga: { pts: 24, reb: 8, ast: 4 },
+            williams: { pts: 26, reb: 6, ast: 3 }
+        };
+
+        const chartTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    },
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleFont: { size: 14, weight: 'bold', family: "'Roboto Condensed', sans-serif" },
+                    bodyFont: { size: 12, family: "'Roboto Condensed', sans-serif" },
+                    padding: 10,
+                    cornerRadius: 6,
+                    bodyColor: '#fefce8',
+                    titleColor: '#fefce8',
+                },
+                legend: {
+                    labels: {
+                        color: '#d6d3d1',
+                        font: {
+                           family: "'Roboto Condensed', sans-serif",
+                           size: 14
+                        }
+                    }
+                }
+            }
+        };
+
+        const colors = {
+            pacers: 'rgba(252, 163, 17, 0.8)', pacersBorder: '#FBBF24',
+            thunder: 'rgba(56, 189, 248, 0.8)', thunderBorder: '#0EA5E9',
+            grid: 'rgba(245, 245, 244, 0.1)',
+            ticks: '#a8a29e'
+        };
+        
+        // Game Flow Chart
+        new Chart(document.getElementById('gameFlowChart'), {
+            type: 'line',
+            data: {
+                labels: ['End of Q1', 'Halftime', 'End of Q3', 'Final'],
+                datasets: [
+                    {
+                        label: 'Pacers',
+                        data: [pacersData.q1, pacersData.q2, pacersData.q3, pacersData.q4],
+                        borderColor: colors.pacersBorder,
+                        backgroundColor: 'rgba(252, 163, 17, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Thunder',
+                        data: [thunderData.q1, thunderData.q2, thunderData.q3, thunderData.q4],
+                        borderColor: colors.thunderBorder,
+                        backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                        fill: true,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: colors.grid }, ticks: { color: colors.ticks } },
+                    x: { grid: { color: colors.grid }, ticks: { color: colors.ticks, font: { size: 14 } } }
+                },
+                ...chartTooltipCallback
+            }
+        });
+        
+        // Stat Leaders Chart
+        new Chart(document.getElementById('statLeadersChart'), {
+            type: 'bar',
+            data: {
+                labels: ['T. Haliburton (IND)', 'P. Siakam (IND)', 'S. Gilgeous-Alexander (OKC)', 'J. Williams (OKC)'],
+                datasets: [
+                    {
+                        label: 'Points',
+                        data: [playerStats.haliburton.pts, playerStats.siakam.pts, playerStats.sga.pts, playerStats.williams.pts],
+                        backgroundColor: '#FDE68A' // amber-200
+                    },
+                    {
+                        label: 'Rebounds',
+                        data: [playerStats.haliburton.reb, playerStats.siakam.reb, playerStats.sga.reb, playerStats.williams.reb],
+                        backgroundColor: '#67E8F9' // cyan-300
+                    },
+                    {
+                        label: 'Assists',
+                        data: [playerStats.haliburton.ast, playerStats.siakam.ast, playerStats.sga.ast, playerStats.williams.ast],
+                        backgroundColor: '#A5B4FC' // indigo-300
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: colors.grid }, ticks: { color: colors.ticks } },
+                    x: { grid: { display: false }, ticks: { color: colors.ticks, font: { size: 12 } } }
+                },
+                ...chartTooltipCallback
+            }
+        });
+
+        // Team Comparison Chart
+        new Chart(document.getElementById('teamComparisonChart'), {
+            type: 'radar',
+            data: {
+                labels: ['FG %', '3PT %', 'FT %', 'Rebounds', 'Assists', 'Turnovers (Lower is Better)'],
+                datasets: [
+                    {
+                        label: 'Pacers',
+                        data: [pacersData.fg_pct, pacersData.tp_pct, pacersData.ft_pct, pacersData.reb, pacersData.ast, (20 - pacersData.tov)], // Inverting turnovers for visual sense
+                        borderColor: colors.pacersBorder,
+                        backgroundColor: 'rgba(252, 163, 17, 0.4)'
+                    },
+                    {
+                        label: 'Thunder',
+                        data: [thunderData.fg_pct, thunderData.tp_pct, thunderData.ft_pct, thunderData.reb, thunderData.ast, (20 - thunderData.tov)], // Inverting turnovers for visual sense
+                        borderColor: colors.thunderBorder,
+                        backgroundColor: 'rgba(56, 189, 248, 0.4)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: colors.grid },
+                        grid: { color: colors.grid },
+                        pointLabels: { color: '#e7e5e4', font: { size: 12 } },
+                        ticks: { display: false }
+                    }
+                },
+                ...chartTooltipCallback
+            }
+        });
+
+    </script>
+</body>
+</html>

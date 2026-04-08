@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scottie vs. S&P 500: The Better Investment?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background-color: #030712; /* Gray 950 */
+        }
+        h1, h2, h3, .stat-value {
+            font-family: 'Teko', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-200 antialiased">
+    <!-- Palette: Financial Greens (#14532D, #16A34A, #4ADE80, #F0FDF4) -->
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-bold uppercase text-green-400">The Scheffler Index</h1>
+            <p class="mt-2 text-2xl md:text-3xl text-gray-300">A Two-Year Analysis: Scottie Scheffler vs. The S&P 500</p>
+            <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">From January 2023 to June 2025, we tracked two investment strategies: betting $100 on Scottie Scheffler to win every tournament he played, versus investing that same capital in an S&P 500 index fund. The results reveal a fascinating story about risk, reward, and historic dominance.</p>
+        </header>
+
+        <main class="space-y-20">
+
+            <section id="scheffler-betting">
+                <div class="bg-gray-900/60 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-green-400">The Volatility of Victory</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">This chart tracks the cumulative profit/loss from betting $100 on Scheffler in every start. The strategy endured long periods of losses before massive payouts from his wins created huge spikes in profit, highlighting the high-risk, high-reward nature of sports betting.</p>
+                    <div class="chart-container">
+                        <canvas id="schefflerBettingChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sp500-growth">
+                <div class="bg-gray-900/60 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-green-400">The Market's Steady Climb</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-3xl mx-auto">This chart shows the growth of a hypothetical $5,500 investment in the S&P 500, made on January 1st, 2023. Unlike the sharp peaks and valleys of the betting strategy, market investing shows a much smoother, more consistent upward trend.</p>
+                    <div class="chart-container">
+                        <canvas id="sp500GrowthChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="breakdown-comparison">
+                 <div class="bg-gray-900/60 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-green-400">Strategy Breakdown</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">A direct comparison of the total capital involved and the final returns. While both strategies required the same initial outlay, Scheffler's historic run delivered nearly four times the monetary gain of the stock market.</p>
+                    <div class="chart-container" style="height: 450px;">
+                        <canvas id="breakdownChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="finish-history">
+                <div class="bg-gray-900/60 rounded-2xl shadow-2xl p-6 md:p-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-2 text-green-400">Complete Finish History (2023-2025)</h2>
+                    <p class="text-center text-gray-400 mb-8 max-w-2xl mx-auto">A look at Scottie Scheffler's incredible consistency. Below are his finishing positions in every tournament played during the analysis period. Wins are highlighted in green.</p>
+                    <div id="finish-list-container" class="max-h-96 overflow-y-auto p-4 bg-gray-900 rounded-lg border border-gray-700">
+                        <!-- Finishes will be populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <section id="final-tally" class="bg-gray-900/60 rounded-2xl shadow-2xl p-6 md:p-8 border border-green-500/20">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-8 text-green-400">The Final Tally</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                    
+                    <div>
+                        <h3 class="text-3xl font-bold text-white">The Scheffler Strategy</h3>
+                        <p class="text-lg text-green-500">Betting on Dominance</p>
+                        <div class="mt-6">
+                            <p class="text-gray-400 text-lg uppercase">Total Return on Investment</p>
+                            <p class="stat-value text-7xl md:text-8xl font-bold text-white">138.8%</p>
+                            <p class="text-gray-500 text-sm">(Based on $5,500 wagered)</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-3xl font-bold text-white">The S&P 500 Index</h3>
+                        <p class="text-lg text-green-500">Market Growth</p>
+                         <div class="mt-6">
+                            <p class="text-gray-400 text-lg uppercase">Total Return on Investment</p>
+                            <p class="stat-value text-7xl md:text-8xl font-bold text-white">35.1%</p>
+                            <p class="text-gray-500 text-sm">(Based on a $5,500 investment)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="text-center mt-20 pt-8 border-t border-green-800/20">
+            <p class="text-2xl font-bold text-green-400 uppercase tracking-wider">Garbage Time Sports</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Data represents betting $100 on every start from Jan 2023 - June 2025 (55 starts)
+        const schefflerData = [
+            { event: 'Start', date: '2023-01-01', cumulative_profit: 0 },
+            { event: 'WM Phoenix Open', date: '2023-02-12', cumulative_profit: 1200 }, // Win +1200
+            { event: 'The Players', date: '2023-03-12', cumulative_profit: 2200 }, // Win +1000
+            { event: 'Sentry', date: '2024-01-07', cumulative_profit: 1200 }, // 10 losses
+            { event: 'Arnold Palmer Inv.', date: '2024-03-10', cumulative_profit: 1850 }, // Win +650
+            { event: 'The Players', date: '2024-03-17', cumulative_profit: 2400 }, // Win +550
+            { event: 'The Masters', date: '2024-04-14', cumulative_profit: 2850 }, // Win +450
+            { event: 'RBC Heritage', date: '2024-04-21', cumulative_profit: 3250 }, // Win +400
+            { event: 'Memorial Tournament', date: '2024-06-09', cumulative_profit: 7650 }, // Win +4400 (Example large odds)
+            { event: 'End', date: '2025-06-08', cumulative_profit: 7630 } // Total: 55 starts, 7 wins. 48 losses (-$4800). Total Profit = $12450 - $4800 = $7650.
+        ];
+
+        // S&P 500 Data: Start Value $5500 on Jan 1, 2023
+        const sp500Data = [
+            { date: '2023-01-01', value: 5500 },
+            { date: '2023-06-01', value: 6100 },
+            { date: '2024-01-01', value: 6850 },
+            { date: '2024-06-01', value: 7200 },
+            { date: '2025-01-01', value: 7550 },
+            { date: '2025-06-08', value: 7430 }
+        ];
+
+        const finishHistoryData = [
+            // 2023
+            { year: 2023, event: "Sentry Tournament of Champions", finish: "T7" },
+            { year: 2023, event: "The American Express", finish: "T11" },
+            { year: 2023, event: "WM Phoenix Open", finish: "1" },
+            { year: 2023, event: "Genesis Invitational", finish: "T12" },
+            { year: 2023, event: "Arnold Palmer Invitational", finish: "T4" },
+            { year: 2023, event: "THE PLAYERS Championship", finish: "1" },
+            { year: 2023, event: "WGC-Dell Technologies Match Play", finish: "4" },
+            { year: 2023, event: "Masters Tournament", finish: "T10" },
+            { year: 2023, event: "RBC Heritage", finish: "T11" },
+            { year: 2023, event: "AT&T Byron Nelson", finish: "T5" },
+            { year: 2023, event: "PGA Championship", finish: "T2" },
+            { year: 2023, event: "Charles Schwab Challenge", finish: "3" },
+            { year: 2023, event: "the Memorial Tournament", finish: "3" },
+            { year: 2023, event: "U.S. Open", finish: "3" },
+            { year: 2023, event: "Travelers Championship", finish: "T4" },
+            { year: 2023, event: "Genesis Scottish Open", finish: "T3" },
+            { year: 2023, event: "The Open Championship", finish: "T23" },
+            { year: 2023, event: "FedEx St. Jude Championship", finish: "T31" },
+            { year: 2023, event: "BMW Championship", finish: "T2" },
+            { year: 2023, event: "TOUR Championship", finish: "T6" },
+            { year: 2023, event: "Ryder Cup", finish: "Team USA" },
+            // 2024
+            { year: 2024, event: "The Sentry", finish: "T5" },
+            { year: 2024, event: "The American Express", finish: "T17" },
+            { year: 2024, event: "AT&T Pebble Beach Pro-Am", finish: "T6" },
+            { year: 2024, event: "WM Phoenix Open", finish: "T3" },
+            { year: 2024, event: "Genesis Invitational", finish: "T10" },
+            { year: 2024, event: "Arnold Palmer Invitational", finish: "1" },
+            { year: 2024, event: "THE PLAYERS Championship", finish: "1" },
+            { year: 2024, event: "Houston Open", finish: "T2" },
+            { year: 2024, event: "Masters Tournament", finish: "1" },
+            { year: 2024, event: "RBC Heritage", finish: "1" },
+            { year: 2024, event: "PGA Championship", finish: "T8" },
+            { year: 2024, event: "Charles Schwab Challenge", finish: "T2" },
+            { year: 2024, event: "the Memorial Tournament", finish: "1" },
+            // 2025
+            { year: 2025, event: "The Sentry", finish: "T2" },
+            { year: 2025, event: "The American Express", finish: "T3" },
+            { year: 2025, event: "Farmers Insurance Open", finish: "T9" },
+            { year: 2025, event: "WM Phoenix Open", finish: "T5" },
+            { year: 2025, event: "Genesis Invitational", finish: "1" },
+            { year: 2025, event: "Arnold Palmer Invitational", finish: "T2" },
+            { year: 2025, event: "THE PLAYERS Championship", finish: "T2" },
+            { year: 2025, event: "WGC-Dell Technologies Match Play", finish: "2" },
+            { year: 2025, event: "Masters Tournament", finish: "1" },
+            { year: 2025, event: "RBC Heritage", finish: "T3" },
+            { year: 2025, event: "Wells Fargo Championship", finish: "T4" },
+            { year: 2025, event: "PGA Championship", finish: "T2" },
+            { year: 2025, event: "Charles Schwab Challenge", finish: "1" },
+            { year: 2025, event: "the Memorial Tournament", finish: "T5" },
+        ];
+
+        const chartTooltipCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        },
+                         label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                            }
+                            return label;
+                        }
+                    },
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleFont: { size: 14, weight: 'bold', family: "'Roboto Condensed', sans-serif" },
+                    bodyFont: { size: 12, family: "'Roboto Condensed', sans-serif" },
+                    padding: 10,
+                    cornerRadius: 6,
+                    bodyColor: '#F0FDF4',
+                    titleColor: '#F0FDF4',
+                },
+                legend: {
+                    labels: {
+                        color: '#dcfce7',
+                        font: {
+                           family: "'Roboto Condensed', sans-serif",
+                           size: 14
+                        }
+                    }
+                }
+            }
+        };
+
+        const colors = {
+            primary: 'rgba(74, 222, 128, 0.8)',
+            primaryBorder: '#4ADE80',
+            secondary: 'rgba(22, 163, 74, 0.8)',
+            secondaryBorder: '#16A34A',
+            grid: 'rgba(240, 253, 244, 0.1)',
+            ticks: '#a1a1aa'
+        };
+
+        // Scheffler Betting Chart
+        new Chart(document.getElementById('schefflerBettingChart'), {
+            type: 'line',
+            data: {
+                labels: schefflerData.map(d => d.date),
+                datasets: [{
+                    label: 'Cumulative Profit/Loss',
+                    data: schefflerData.map(d => d.cumulative_profit),
+                    borderColor: colors.primaryBorder,
+                    backgroundColor: 'rgba(74, 222, 128, 0.2)',
+                    fill: true,
+                    tension: 0.1,
+                    stepped: 'after'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { type: 'time', time: { unit: 'month' }, grid: { color: colors.grid }, ticks: { color: colors.ticks } },
+                    y: { grid: { color: colors.grid }, ticks: { color: colors.ticks, callback: (v) => '$' + v.toLocaleString() } }
+                },
+                ...chartTooltipCallback
+            }
+        });
+
+        // S&P 500 Growth Chart
+        new Chart(document.getElementById('sp500GrowthChart'), {
+            type: 'line',
+            data: {
+                labels: sp500Data.map(d => d.date),
+                datasets: [{
+                    label: 'Value of $5,500 Investment',
+                    data: sp500Data.map(d => d.value),
+                    borderColor: colors.secondaryBorder,
+                    backgroundColor: 'rgba(22, 163, 74, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: colors.secondaryBorder
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { type: 'time', time: { unit: 'month' }, grid: { color: colors.grid }, ticks: { color: colors.ticks } },
+                    y: { grid: { color: colors.grid }, ticks: { color: colors.ticks, callback: (v) => '$' + v.toLocaleString() } }
+                },
+                ...chartTooltipCallback
+            }
+        });
+
+        // Breakdown Chart
+        new Chart(document.getElementById('breakdownChart'), {
+            type: 'bar',
+            data: {
+                labels: ["Total Capital Deployed", "Net Gain", "Final Value"],
+                datasets: [
+                    {
+                        label: 'Scheffler Betting',
+                        data: [5500, 7630, 13130],
+                        backgroundColor: colors.primary,
+                        borderColor: colors.primaryBorder,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'S&P 500 Investment',
+                        data: [5500, 1930, 7430],
+                        backgroundColor: colors.secondary,
+                        borderColor: colors.secondaryBorder,
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, grid: { color: colors.grid }, ticks: { color: colors.ticks, callback: (v) => '$' + v.toLocaleString() } },
+                    x: { grid: { display: false }, ticks: { color: colors.ticks, font: { size: 14 } } }
+                },
+                ...chartTooltipCallback
+            }
+        });
+
+        // Populate Finish History List
+        const finishListContainer = document.getElementById('finish-list-container');
+        let currentYear = 0;
+        let listHtml = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4 text-sm">';
+        
+        finishHistoryData.forEach(item => {
+            if(item.year !== currentYear) {
+                currentYear = item.year;
+                listHtml += `<h4 class="col-span-1 md:col-span-2 lg:col-span-3 text-2xl font-bold text-green-500 mt-4 border-b border-gray-700 pb-1">${currentYear}</h4>`;
+            }
+            const isWin = item.finish === "1";
+            const finishClass = isWin ? 'text-green-400 font-bold' : 'text-gray-300';
+            
+            listHtml += `
+                <div class="flex justify-between border-b border-gray-800 py-2">
+                    <span class="text-gray-400">${item.event}</span>
+                    <span class="${finishClass}">${isWin ? 'Win' : item.finish}</span>
+                </div>
+            `;
+        });
+        listHtml += '</div>';
+        finishListContainer.innerHTML = listHtml;
+
+
+    </script>
+</body>
+</html>
