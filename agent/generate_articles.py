@@ -4,6 +4,7 @@ import json
 import random
 import requests
 import xml.etree.ElementTree as ET
+import time
 from datetime import datetime
 from bs4 import BeautifulSoup
 from google import genai
@@ -293,6 +294,10 @@ def main():
             new_articles.append(article_data)
         except Exception as e:
             print(f"Failed to generate article: {e}")
+        
+        # Sleep for 15 seconds to avoid Google Free Tier Rate Limits (429 errors)
+        if i < len(news_list) - 1:
+            time.sleep(15)
 
     print("Updating pages...")
     update_articles_page(new_articles)
