@@ -4,10 +4,10 @@ on:
   schedule:
     # 00:00 UTC is 8:00 PM EST / 9:00 PM EDT
     - cron: '0 0 * * *'
-  workflow_dispatch: # Allows manual trigger
+  workflow_dispatch: # Allows manual trigger from the GitHub UI
 
 jobs:
-  generate-articles:
+  run-agent:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r agent/requirements.txt
           
-      - name: Run Sports Agent
+      - name: Generate Articles
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python agent/generate_articles.py

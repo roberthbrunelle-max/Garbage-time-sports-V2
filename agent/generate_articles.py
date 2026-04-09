@@ -15,7 +15,13 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARTICLES_DIR = os.path.join(PROJECT_ROOT, "articles")
 INDEX_PATH = os.path.join(PROJECT_ROOT, "index.html")
 ARTICLES_PAGE_PATH = os.path.join(PROJECT_ROOT, "articles.html")
-TEMPLATE_ARTICLE_PATH = os.path.join(ARTICLES_DIR, "colorado-football.html")
+
+# Find a valid template. We will use whatever HTML file is in articles/
+def get_template_path():
+    files = [f for f in os.listdir(ARTICLES_DIR) if f.endswith('.html') and f != "index.html"]
+    if not files:
+        raise Exception("No template HTML file found in articles/")
+    return os.path.join(ARTICLES_DIR, files[0])
 
 SYSTEM_PROMPT = """You are an edgy, stat-focused sports writer for 'Garbage Time Sports'.
 Write a bold, analytical, yet casual sports article based on the provided news context.
@@ -54,23 +60,20 @@ def slugify(text):
 
 def fetch_top_news():
     print("Fetching top news from ESPN RSS...")
-    # use headers so they don't block us
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)'
-    }
+    headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(RSS_URL, headers=headers)
     response.raise_for_status()
     root = ET.fromstring(response.content)
     items = root.findall(".//item")
     news_list = []
-    # Take top 10 unique items
+    
     seen = set()
     for item in items:
         if len(news_list) >= 10:
             break
         title = item.find("title").text if item.find("title") is not None else ""
         desc = item.find("description").text if item.find("description") is not None else ""
-        if title not in seen:
+        if title and title not in seen:
             seen.add(title)
             news_list.append({"title": title, "desc": desc})
     return news_list
@@ -87,20 +90,17 @@ def generate_article_content(news, client):
     )
     return clean_json(response.text)
 
-def create_article_html(article_data, date_str, slug, gradient):
-    with open(TEMPLATE_ARTICLE_PATH, 'r', encoding='utf-8') as f:
+def create_article_html(article_data, date_str, slug, gradient, template_path):
+    with open(template_path, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'html.parser')
     
-    # Update title
     if soup.title:
         soup.title.string = f"{article_data['headline']} — Garbage Time Sports"
     
-    # Update meta description
     meta_desc = soup.find('meta', attrs={'name': 'description'})
     if meta_desc:
         meta_desc['content'] = article_data['preview']
 
-    # Update article content
     cat_tag = soup.find('span', class_=re.compile(r'tag \w+'))
     if cat_tag:
         cat_tag['class'] = f"tag {article_data['category']}"
@@ -126,7 +126,6 @@ def create_article_html(article_data, date_str, slug, gradient):
 
     body = soup.find('div', class_='article-body')
     if body:
-        # Clear existing body and append new one
         body.clear()
         body_html = BeautifulSoup(article_data['body'], 'html.parser')
         body.append(body_html)
@@ -145,7 +144,6 @@ def update_articles_page(new_articles):
         return
 
     for article in reversed(new_articles):
-        # Create card
         card_html = f"""
         <article class="article-card fade-in" data-category="{article['category']}" data-title="{article['slug'].replace('-', ' ')} {article['headline'].lower()}">
           <a href="articles/{article['slug']}.html">
@@ -175,7 +173,6 @@ def update_index_page(new_articles):
     with open(INDEX_PATH, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'html.parser')
 
-    # Update Ticker
     ticker = soup.find('div', class_='ticker-track')
     if ticker:
         for article in reversed(new_articles[:5]):
@@ -183,7 +180,6 @@ def update_index_page(new_articles):
             span.string = article['headline']
             ticker.insert(0, span)
 
-    # Update Hero
     hero = soup.find('section', class_='hero')
     if hero and new_articles:
         top_art = new_articles[0]
@@ -214,7 +210,6 @@ def update_index_page(new_articles):
         if hero_btn:
             hero_btn['href'] = f"articles/{top_art['slug']}.html"
 
-    # Update Featured Features
     featured_grid = soup.find('div', class_='featured-grid')
     if featured_grid:
         for article in reversed(new_articles[:3]):
@@ -239,10 +234,9 @@ def update_index_page(new_articles):
             new_card = BeautifulSoup(card_html, 'html.parser').article
             featured_grid.insert(0, new_card)
     
-    # Update Latest Items
     latest_list = soup.find('div', class_='latest-list')
     if latest_list:
-        for article in reversed(new_articles[3:7]): # take next 4
+        for article in reversed(new_articles[3:7]):
             latest_html = f"""
             <a href="articles/{article['slug']}.html" style="text-decoration:none;">
               <div class="latest-item fade-in">
@@ -261,11 +255,17 @@ def update_index_page(new_articles):
     with open(INDEX_PATH, 'w', encoding='utf-8') as f:
         f.write(str(soup))
 
-
 def main():
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         print("GEMINI_API_KEY not found in env.")
+        return
+
+    try:
+        template_path = get_template_path()
+        print(f"Using template: {template_path}")
+    except Exception as e:
+        print(f"Error: {e}")
         return
 
     client = genai.Client(api_key=api_key)
@@ -285,7 +285,7 @@ def main():
                 slug = slug[:-1]
             gradient = random.choice(GRADIENTS)
 
-            create_article_html(article_data, date_str, slug, gradient)
+            create_article_html(article_data, date_str, slug, gradient, template_path)
             
             article_data['slug'] = slug
             article_data['date_str'] = date_str
